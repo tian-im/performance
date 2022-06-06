@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+User.connection.truncate(:users)
+
+(1..100).each do |i|
+  User.create!(name: "name#{i}")
+end
