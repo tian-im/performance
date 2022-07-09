@@ -19,10 +19,10 @@ const setupRoutesForKoa = function (koaApp) {
   const router = new Router();
 
   router.get("/", async (ctx, _next) => {
-    await ctx.render('home');
+    ctx.body = "Helloworld";
   });
 
-  router.get("/users", async (ctx, _next) => {
+  router.get("/users/new_objects", async (ctx, _next) => {
     const users = []
     for (let i = 1; i <= 100; i++) {
       const user = User.build({ name: `name${i}` })
@@ -33,7 +33,14 @@ const setupRoutesForKoa = function (koaApp) {
     });
   });
 
-  router.get("/users/db", async (ctx, _next) => {
+  router.get("/users/all_records", async (ctx, _next) => {
+    const users = await User.findAll()
+    await ctx.render('users', {
+      users: users
+    });
+  });
+
+  router.get("/users/find_each_record", async (ctx, _next) => {
     const users = []
     for (let i = 1; i <= 100; i++) {
       const user = await User.findByPk(i)
